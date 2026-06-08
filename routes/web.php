@@ -1,17 +1,20 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FeedController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware("auth")->name("home");
+Route::get("/", [FeedController::class, "show"])->middleware("auth")->name("home");
+Route::post("/", [FeedController::class, "store"])->middleware("auth")->name("home");
+
 Route::get("/digest", function () {
     return "Digest";
 })->middleware("auth")->name("digest");
 Route::get("/discover", function () {
     return "Dscover";
 })->middleware("auth")->name("discover");
+
+
 
 Route::post("/sign-out", [AuthController::class, "signOut"])->middleware("auth");
 

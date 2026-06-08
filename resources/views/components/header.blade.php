@@ -41,13 +41,39 @@
             </div>
         </div>
 
-        <div class="add">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-            </svg>
-        </div>
+        <a href="?add-url">
+            <div class="add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg>
+            </div>
+        </a>
 
-        <div class="avatar"></div>
+        <div class="avatar">
+            <img src="https://static.vecteezy.com/system/resources/previews/025/667/911/non_2x/guest-icon-design-vector.jpg" alt="avatar">
+
+            <div class="dropdown">
+                <form action="/sign-out" method="POST">
+                    @csrf
+                    <button type="submit">Sign Out</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    @if (request()->has('add-url'))
+    <div class="feed-url">
+        <form action="/" method="post">
+            @csrf
+            <input type="text" name="feed-url" placeholder="Add feed url">
+            @if ($errors->any())
+            @foreach($errors->all() as $error)
+            <p>{{$error}}</p>
+            @endforeach
+            @endif
+            <button type="submit">Add link</button>
+        </form>
+    </div>
+    @endif
 </header>

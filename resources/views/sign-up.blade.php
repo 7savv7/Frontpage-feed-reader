@@ -49,6 +49,7 @@
     <form action="/sign-up" method="post">
         @csrf
         <h1>Create account</h1>
+        <input type="name" name="name" placeholder="Enter your name">
         <input type="email" name="email" placeholder="Enter email address">
         @if ($errors->any())
         @foreach($errors->all() as $error)

@@ -44,6 +44,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate(
             [
+                "name" => ["required", "min:3"],
                 "email" => ["required", "email", "unique:users,email"],
                 "password" => ["required", "min:6", "confirmed"]
             ]
@@ -52,14 +53,13 @@ class AuthController extends Controller
         try {
             $user = User::create(
                 [
+                    "name" => $validated["name"],
                     "email" => $validated["email"],
                     "password" => Hash::make($validated["password"])
                 ]
             );
         } catch (\Exception $e) {
-            return back()->withErrors(
-                ["error" => "Something wrong happened while creating account."]
-            );
+            return back()->withErrors(["error" => $e]);
         }
 
         Auth::login($user);

@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{asset('css/tokens.css')}}">
     <link rel="stylesheet" href="{{asset('css/components/header.css')}}">
+    <link rel="stylesheet" href="{{asset('css/components/side.css')}}">
     <script defer src="{{asset('js/components/header.js')}}"></script>
     <script defer src="{{asset('js/index.js')}}"></script>
 
@@ -25,32 +26,19 @@
         main {
             display: flex;
             height: calc(100% - 60px);
+            font-family: var(--font-sans);
         }
 
-        .side {
-            width: 25%;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
+        .info {
+            font-size: 22px;
+            font-weight: bold;
         }
 
-        .items {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .items li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .separator {
-            border-bottom: 1px solid black;
-            width: 100%;
-            margin: 20px 0;
+        .info span {
+            font-size: 14px;
+            font-weight: 500;
+            color: grey;
+            margin-left: 5px;
         }
 
         .feeds {
@@ -64,8 +52,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid red;
             width: 100%;
+            border-bottom: 1px solid grey;
         }
 
         .layout {
@@ -108,10 +96,10 @@
         }
 
         .article {
-            padding: 10px;
+            padding: 10px 40px;
             display: flex;
             flex-direction: column;
-            border: 1px solid black;
+            border-bottom: 1px solid black;
             width: 100%;
             align-items: flex-start;
         }
@@ -139,44 +127,11 @@ for ($i = 0; $i < count($feeds); $i++) {
 <body>
     <x-header />
     <main>
-
-
-        <div class="side">
-            <ul class="items">
-                <li>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-newspaper-icon lucide-newspaper">
-                            <path d="M15 18h-5" />
-                            <path d="M18 14h-8" />
-                            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" />
-                            <rect width="8" height="4" x="10" y="6" rx="1" />
-                        </svg>
-                        <p>All items</p>
-                    </div>
-                    <p>{{$len}}</p>
-                </li>
-                <li>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-icon lucide-bookmark">
-                            <path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />
-                        </svg>
-                        <p>Saved</p>
-                    </div>
-                    <p>0</p>
-                </li>
-            </ul>
-
-            <div class="separator"></div>
-
-            <p>categories</p>
-        </div>
+        <x-side :length="$len" />
 
         <div class="feeds">
             <div class="feeds-header">
-                <div class="info">
-                    <p>All items</p>
-                    <p>{{$len}} unread</p>
-                </div>
+                <p class="info">All items <span>{{$len}} unread</span></p>
 
                 <div class="options">
                     <div class="layout">
@@ -245,9 +200,9 @@ for ($i = 0; $i < count($feeds); $i++) {
                     </div>
 
                     <div class="content">
-                        <h3>{{$item->get_title()}}</h3>
+                        <h3><a href="{{$item->get_link()}}" target="_blank">{{$item->get_title()}}</a></h3>
 
-                        <p>{{Str::limit($item->get_description(), 100)}}</p>
+                        <p>{{Str::limit($item->get_description(), 300)}}</p>
                     </div>
                 </div>
                 @endforeach

@@ -48,17 +48,17 @@
         }
 
         .feeds-header {
-            padding: 20px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            border-bottom: 1px solid grey;
+            border-bottom: 1px solid var(--color-border-subtle);
         }
 
         .layout {
             border-radius: 8px;
-            border: 1px solid grey;
+            border: 1px solid var(--color-border-subtle);
             overflow: hidden;
         }
 
@@ -68,20 +68,23 @@
         }
 
         .layout>div:nth-child(2) {
-            border-left: 1px solid grey;
-            border-right: 1px solid grey;
+            border-left: 1px solid var(--color-border-subtle);
+            border-right: 1px solid var(--color-border-subtle);
         }
 
         .layout-selected {
-            background-color: grey;
+            background-color: var(--color-bg-tertiary);
         }
 
         .filter,
         .refresh,
         .read {
+            display: flex;
+            gap: 5px;
+            align-items: center;
             padding: 4px 8px;
             border-radius: 10px;
-            border: 1px solid grey;
+            border: 1px solid var(--color-border-subtle);
             margin-left: 8px;
             cursor: pointer;
         }
@@ -99,13 +102,13 @@
             padding: 10px 40px;
             display: flex;
             flex-direction: column;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid var(--color-border-subtle);
             width: 100%;
             align-items: flex-start;
         }
 
         .feed-info>img {
-            border-radius: 50%;
+            border-radius: 5px;
             margin-right: 10px;
         }
 
@@ -113,6 +116,11 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+        }
+
+        .content a {
+            all: unset;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -131,7 +139,7 @@ for ($i = 0; $i < count($feeds); $i++) {
 
             <div class="feeds">
                 <div class="feeds-header">
-                    <p class="info">All items <span>{{$len}} unread</span></p>
+                    <p class="info">All Items <span>{{$len}} unread</span></p>
 
                     <div class="options">
                         <div class="layout">
@@ -202,7 +210,7 @@ for ($i = 0; $i < count($feeds); $i++) {
                         <div class="content">
                             <h3><a href="{{$item->get_link()}}" target="_blank">{{$item->get_title()}}</a></h3>
 
-                            <p>{{Str::limit($item->get_description(), 300)}}</p>
+                            <p>{{Str::limit($item->get_description(), 500)}}</p>
 
                             @php
                             $category = $categories->firstWhere('id', $feed->category_id);

@@ -1,10 +1,10 @@
 .side {
-    width: 25%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
-    border-right: 1px solid grey;
+    border-right: 1px solid var(--color-border-subtle);
 }
 
 .items {
@@ -21,13 +21,19 @@
     padding: 10px;
 }
 
+.filter-option > div {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
 .filter-option-active {
     background-color: lightblue;
     border-radius: 12px;
 }
 
 .separator {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--color-border-subtle);
     width: 100%;
     margin: 20px 0;
 }

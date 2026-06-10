@@ -117,17 +117,17 @@
     </style>
 </head>
 
-<?php
+@php
 $len = 0;
 for ($i = 0; $i < count($feeds); $i++) {
     $len += count($feeds[$i]->items);
 };
-?>
+@endphp
 
 <body>
     <x-header :feeds="$feeds" :categories="$categories" />
     <main>
-        <x-side :length="$len" :categories="$categories" />
+        <x-side :length="$len" :feeds="$feeds" :categories="$categories" />
 
         <div class="feeds">
             <div class="feeds-header">

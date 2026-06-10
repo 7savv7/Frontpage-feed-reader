@@ -1,4 +1,4 @@
-@props(["length", "categories"])
+@props(["length", "feeds", "categories"])
 
 <div class="side">
     <ul class="items">
@@ -27,13 +27,38 @@
 
     <div class="separator"></div>
 
-    <p>categories</p>
+    <p class="categories">categories</p>
 
-    <ul>
+    <ul class="categories-list">
         @if ($categories !== null)
         @foreach($categories as $category)
-        <li>{{$category->name}}</li>
+        <li class="category">{{$category->name}}</li>
+        <ul>
+            @foreach ($feeds->where('category_id', $category->id) as $feed)
+            <li class="category-feed">
+                <div>
+
+                    <img src="{{$feed->favicon}}" alt="favicon">
+                    <p>{{ $feed->title }}</p>
+                </div>
+                <p class="count">{{count($feed->items)}}</p>
+            </li>
+            @endforeach
+        </ul>
         @endforeach
         @endif
+
+        @foreach ($feeds->where('category_id', null) as $feed)
+        <li class="uncategorized">
+            <div>
+                <img src="{{$feed->favicon}}" alt="favicon">
+                <p>{{ $feed->title }}</p>
+            </div>
+            <p class="count">{{count($feed->items)}}</p>
+        </li>
+        @endforeach
     </ul>
+
+    <div class="separator"></div>
+
 </div>

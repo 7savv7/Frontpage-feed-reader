@@ -39,7 +39,12 @@ class FeedController extends Controller
 
     public function store(Request $request)
     {
-        $url = $request->validate(["feed-url" => ["required", "url"]]);
+        $url = $request->validate(
+            [
+                "feed-url" => ["required", "url"],
+                "select-category" => ["nullable", "integer", "exists:categories,id"]
+            ]
+        );
 
         $feed = new SimplePie();
         $feed->set_feed_url($url["feed-url"]);
@@ -58,7 +63,8 @@ class FeedController extends Controller
                 "url" => $url["feed-url"],
                 "title" => $feed->get_title(),
                 "description" => $feed->get_description(),
-                "favicon" => $feed->get_favicon()
+                "favicon" => $feed->get_favicon(),
+                "category_id" => $url["select-category"] ?: null,
             ]
         );
 

@@ -33,7 +33,7 @@
         @if ($categories !== null)
         @foreach($categories as $category)
         <li class="category">{{$category->name}}</li>
-        <ul>
+        <ul class="category-feeds">
             @foreach ($feeds->where('category_id', $category->id) as $feed)
             <li class="category-feed">
                 <div>

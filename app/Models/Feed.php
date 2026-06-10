@@ -12,6 +12,7 @@ class Feed extends Model
         'title',
         'description',
         'favicon',
+        'category_id'
     ];
 
     //

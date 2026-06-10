@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Feed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,9 @@ class FeedController extends Controller
                 $feed->items = [];
             }
         }
-        return view('index', compact("feeds"));
+
+        $categories = Category::where("user_id", Auth::id())->get();
+        return view('index', compact("feeds", "categories"));
     }
 
     public function store(Request $request)

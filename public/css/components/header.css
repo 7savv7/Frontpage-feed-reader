@@ -158,10 +158,14 @@ ul li a {
     justify-content: center;
 }
 
-.feed-url form {
+.form-container {
     background-color: white;
     display: flex;
     flex-direction: column;
+}
+
+.feed-url form {
+    display: flex;
     padding: 10px;
     border-radius: 8px;
     gap: 10px;
@@ -169,4 +173,10 @@ ul li a {
 
 .feed-url form input {
     padding: 10px;
+}
+
+
+.update-feeds {
+    display: flex;
+    flex-direction: column;
 }

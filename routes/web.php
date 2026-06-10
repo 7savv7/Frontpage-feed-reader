@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [FeedController::class, "show"])->middleware("auth")->name("home");
 Route::post("/", [FeedController::class, "store"])->middleware("auth")->name("home");
+
+Route::post("/category", [CategoryController::class, "store"])->middleware("auth");
 
 Route::get("/digest", function () {
     return "Digest";

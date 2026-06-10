@@ -125,9 +125,9 @@ for ($i = 0; $i < count($feeds); $i++) {
 ?>
 
 <body>
-    <x-header />
+    <x-header :feeds="$feeds" :categories="$categories" />
     <main>
-        <x-side :length="$len" />
+        <x-side :length="$len" :categories="$categories" />
 
         <div class="feeds">
             <div class="feeds-header">

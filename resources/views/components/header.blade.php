@@ -1,3 +1,5 @@
+@props(["feeds", "categories"])
+
 <header>
     <div>
         <div class="logo">
@@ -64,16 +66,58 @@
 
     @if (request()->has('add-url'))
     <div class="feed-url">
-        <form action="/" method="post">
-            @csrf
-            <input type="text" name="feed-url" placeholder="Add feed url">
-            @if ($errors->any())
-            @foreach($errors->all() as $error)
-            <p>{{$error}}</p>
-            @endforeach
+        <div class="form-container">
+
+            <form action="/" method="post">
+                @csrf
+                <input type="text" name="feed-url" placeholder="Add feed url">
+                @if ($categories !== null && count($categories) >= 1)
+                <select name="select-category">
+                    <option value="">No category</option>
+                    @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
+                @endif
+                <button type="submit">Add link</button>
+                @if ($errors->any())
+                @foreach($errors->all() as $error)
+                <p>{{$error}}</p>
+                @endforeach
+                @endif
+            </form>
+
+            <form action="/category" method="post">
+                @csrf
+                <input type="text" name="category" placeholder="Add category">
+                @if ($errors->any())
+                @foreach($errors->all() as $error)
+                <p>{{$error}}</p>
+                @endforeach
+                @endif
+                <button type="submit">Add category</button>
+            </form>
+
+            @if ($categories !== null && count($categories) >= 1)
+            <form class="update-feeds" action="/" method="patch">
+                @foreach ($feeds as $feed)
+                <div>
+
+                    <img src="{{$feed->favicon}}" alt="favicon"> {{$feed->title}}
+
+                    <select name="" id="">
+                        <option {{empty($feed->category_id) ? 'selected' : ''}} value="">No category</option>
+                        @foreach($categories as $category)
+                        <option {{$category->id === $feed->category_id ? 'selected' : ""}} value="{{$category->id}}">
+                            {{$category->name}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                @endforeach
+            </form>
             @endif
-            <button type="submit">Add link</button>
-        </form>
+        </div>
     </div>
     @endif
 </header>

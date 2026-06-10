@@ -1,4 +1,4 @@
-@props(["length"])
+@props(["length", "categories"])
 
 <div class="side">
     <ul class="items">
@@ -28,4 +28,12 @@
     <div class="separator"></div>
 
     <p>categories</p>
+
+    <ul>
+        @if ($categories !== null)
+        @foreach($categories as $category)
+        <li>{{$category->name}}</li>
+        @endforeach
+        @endif
+    </ul>
 </div>

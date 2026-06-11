@@ -11,6 +11,10 @@
 
 /* All Items, Saved Items */
 
+.items-li {
+    width: 100%;
+}
+
 .items {
     display: flex;
     flex-direction: column;
@@ -95,6 +99,10 @@
     max-height: 100%;
 }
 
+.feed-li {
+    width: 100%;
+}
+
 .category-feed {
     margin-left: 5px;
     display: flex;
@@ -111,6 +119,10 @@
 }
 
 /* Feeds without category */
+
+.uncategorized-li {
+    width: 100%;
+}
 
 .uncategorized {
     display: flex;

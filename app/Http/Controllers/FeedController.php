@@ -12,6 +12,8 @@ class FeedController extends Controller
 {
     public function show()
     {
+        $selectedFeeds = request()->input("feed", []);
+
         if (Auth::guest()) {
             $opmlPath = public_path("data/sample-feeds.opml");
             $xml = simplexml_load_file($opmlPath);
@@ -43,7 +45,11 @@ class FeedController extends Controller
                 $pie->init();
 
                 $feed->favicon = $pie->get_favicon();
-                $feed->items = $pie->get_items() ?? [];
+                if (in_array($feed->id, $selectedFeeds) || empty($selectedFeeds)) {
+                    $feed->items = $pie->get_items() ?? [];
+                } else {
+                    $feed->items = [];
+                }
             }
 
             return view("index", compact("feeds", "categories"));
@@ -63,7 +69,11 @@ class FeedController extends Controller
                     "health_status" => "active",
                 ]);
 
-                $feed->items = $pie->get_items() ?? [];
+                if (in_array($feed->id, $selectedFeeds) || empty($selectedFeeds)) {
+                    $feed->items = $pie->get_items() ?? [];
+                } else {
+                    $feed->items = [];
+                }
             } else {
                 $feed->update(["health_status" => "error"]);
                 $feed->items = [];

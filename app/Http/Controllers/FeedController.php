@@ -12,6 +12,43 @@ class FeedController extends Controller
 {
     public function show()
     {
+        if (Auth::guest()) {
+            $opmlPath = public_path("data/sample-feeds.opml");
+            $xml = simplexml_load_file($opmlPath);
+
+            $categories = collect();
+            $feeds = collect();
+
+            foreach ($xml->body->outline as $categoryNode) {
+                $categoryName = (string) $categoryNode['text'];
+
+                $categories->push((object)[
+                    'id' => $categories->count() + 1,
+                    'name' => $categoryName,
+                ]);
+
+                foreach ($categoryNode->outline as $feedNode) {
+                    $feeds->push((object)[
+                        'category_id' => $categories->count(),
+                        'title' => (string) $feedNode['title'],
+                        'url' => (string) ($feedNode['xmlUrl'] ?? $feedNode['xmlurl']),
+                    ]);
+                }
+            }
+
+            foreach ($feeds as $feed) {
+                $pie = new SimplePie();
+                $pie->set_feed_url($feed->url);
+                $pie->enable_cache(false);
+                $pie->init();
+
+                $feed->favicon = $pie->get_favicon();
+                $feed->items = $pie->get_items() ?? [];
+            }
+
+            return view("index", compact("feeds", "categories"));
+        }
+
         $feeds = Feed::where("user_id", Auth::id())->get();
         foreach ($feeds as $feed) {
             $pie = new SimplePie();

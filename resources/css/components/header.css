@@ -15,7 +15,7 @@ header ul {
 
 header ul {
     list-style-type: none;
-    gap: 10px;
+    gap: 5px;
 }
 
 header .logo {
@@ -42,62 +42,59 @@ header ul li a {
     font-size: var(--text-base);
     text-decoration: none;
     font-family: var(--font-sans);
+    border-radius: 5px;
+    padding: 4px 12px;
+}
+
+header:not(.active) ul li a:hover {
+    background-color: var(--color-border-subtle);
 }
 
 header .active {
     color: var(--color-text-primary);
     background-color: var(--color-border-subtle);
-    border-radius: 5px;
-    padding: 4px 12px;
 }
 
 header .right {
     gap: 10px;
 }
 
+/* Search input */
+
 header .search {
     height: 100%;
-    position: relative;
     width: 200px;
-}
-
-header .search input {
-    padding: 6px;
     border: 1px solid var(--color-border);
     background-color: var(--color-bg-secondary);
     border-radius: 6px;
+    padding: 0 14px;
+}
+
+header .search input {
     outline: none;
     width: 100%;
+    height: 100%;
+    padding: 6px 6px 3.5px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
 }
 
-header .placeholder {
-    position: absolute;
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+header .search input::placeholder {
     color: var(--color-text-tertiary);
-    font-family: var(--font-sans);
-    font-size: 14px;
-    user-select: none;
-    width: 100%;
 }
 
-header .placeholder svg {
+header .search svg {
     stroke: var(--color-text-tertiary);
+    margin-right: 4px;
 }
 
-header .placeholder div {
+header .search div {
     padding: 0 4px;
     border: 1px solid var(--color-border);
 
     border-radius: 4px;
     background-color: white;
-}
-
-header .search input:focus + div {
-    display: none;
 }
 
 header .add {
@@ -125,14 +122,37 @@ header .avatar > img {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
 }
+
+/* Avatar dropdown */
 
 header .avatar > .dropdown {
     position: absolute;
+    height: 30px;
+    margin: 4px 5px 0 0;
     top: 100%;
     right: 0;
     width: 80px;
     display: none;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+header .avatar > .dropdown form {
+    width: 100%;
+    height: 100%;
+}
+header .avatar > .dropdown form button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+header .avatar > .dropdown form button:hover {
+    background-color: lightgrey;
 }
 
 header .feed-url {

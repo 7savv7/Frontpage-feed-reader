@@ -31,6 +31,7 @@ class FeedController extends Controller
 
                 foreach ($categoryNode->outline as $feedNode) {
                     $feeds->push((object)[
+                        'id' => $feeds->count() + 1,
                         'category_id' => $categories->count(),
                         'title' => (string) $feedNode['title'],
                         'url' => (string) ($feedNode['xmlUrl'] ?? $feedNode['xmlurl']),

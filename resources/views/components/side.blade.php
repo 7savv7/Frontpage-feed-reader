@@ -1,6 +1,7 @@
+@vite('resources/css/components/side.css')
 @props(["length", "feeds", "categories"])
 
-<div class="side">
+<aside class="side">
     <ul class="items">
         <li class="items-li">
             <a href="/" class="filter-option {{empty(request('feed')) ? 'filter-option-active' : ''}}">
@@ -79,4 +80,4 @@
 
     <div class="separator"></div>
 
-</div>
+</aside>

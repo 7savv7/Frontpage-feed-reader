@@ -1,3 +1,4 @@
+@vite('resources/css/components/header.css')
 @props(["feeds", "categories"])
 
 <header>

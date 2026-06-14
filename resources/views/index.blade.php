@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{asset('css/tokens.css')}}">
-    <link rel="stylesheet" href="{{asset('css/components/header.css')}}">
-    <link rel="stylesheet" href="{{asset('css/components/side.css')}}">
+    @vite('resources/css/global.css')
     <script defer src="{{asset('js/components/header.js')}}"></script>
     <script defer src="{{asset('js/components/side.js')}}"></script>
     <script defer src="{{asset('js/index.js')}}"></script>
@@ -46,7 +44,8 @@
         .feeds {
             display: flex;
             flex-direction: column;
-            flex-basis: 80%;
+            flex: 1;
+            min-width: 0;
         }
 
         .feeds-header {
@@ -56,6 +55,14 @@
             align-items: center;
             width: 100%;
             border-bottom: 1px solid var(--color-border);
+        }
+
+        .options {
+            display: flex;
+        }
+
+        .layout {
+            display: flex;
         }
 
         .layout {
@@ -107,6 +114,7 @@
             border-bottom: 1px solid var(--color-border);
             width: 100%;
             align-items: flex-start;
+            word-break: break-all;
         }
 
         .feed-info>img {

@@ -13,7 +13,7 @@
                     </svg>
                     <p>All Items</p>
                 </div>
-                <p>43</p>
+                <p>{{$total}}</p>
             </a>
         </li>
         <li class="filter-option">
@@ -32,8 +32,7 @@
     <p class="categories">categories</p>
 
     <ul class="categories-list">
-        @if ($categories !== null)
-        @foreach($categories as $category)
+        @forelse($categories as $category)
         <li class="category-container">
             <div class="category filter-option">{{Str::limit($category->name, 20)}} <span>10</span></div>
 
@@ -53,21 +52,27 @@
             </ul>
             @endif
         </li>
-        @endforeach
-        @endif
+        @empty
+        @endforelse
 
         @if (count($feeds->where('category_id', null)) >= 1)
-        @foreach ($feeds->where('category_id', null) as $feed)
-        <li class="uncategorized-li">
-            <a href="#" data-id="{{$feed->id}}" class="feed uncategorized filter-option {{in_array($feed->id, request('feed', [])) ? 'filter-option-active' : ''}}">
-                <div>
-                    <img src="{{$feed->favicon}}" alt="favicon">
-                    <p>{{ Str::limit($feed->title, 20) }}</p>
-                </div>
-                <p class="count">{{count($feed->items)}}</p>
-            </a>
+        <li class="category-container">
+            <div class="category filter-option">No category <span>{{$feeds->where('category_id', null)->count()}}</span></div>
+
+            <ul class="category-feeds">
+                @foreach ($feeds->where('category_id', null) as $feed)
+                <li class="feed-li">
+                    <a href="#" data-id="{{$feed->id}}" class="feed uncategorized filter-option {{in_array($feed->id, request('feed', [])) ? 'filter-option-active' : ''}}">
+                        <div>
+                            <img src="{{$feed->favicon}}" alt="favicon">
+                            <p>{{ Str::limit($feed->title, 20) }}</p>
+                        </div>
+                        <p class="count">{{count($feed->items)}}</p>
+                    </a>
+                </li>
+                @endforeach
+            </ul>
         </li>
-        @endforeach
         @endif
     </ul>
 

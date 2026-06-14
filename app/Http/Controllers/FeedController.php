@@ -48,7 +48,7 @@ class FeedController extends Controller
                 "title" => $feed->get_title(),
                 "description" => $feed->get_description(),
                 "favicon" => $feed->get_favicon(),
-                "category_id" => $url["select-category"] ?: null,
+                "category_id" => $url["select-category"] ?? null,
             ]
         );
 

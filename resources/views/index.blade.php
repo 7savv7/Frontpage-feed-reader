@@ -1,3 +1,10 @@
+@php
+$total = 0;
+foreach ($feeds as $feed) {
+$total += $feed->items->count();
+}
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,11 +153,11 @@
 <body>
     <x-header />
     <main>
-        <x-side />
+        <x-side :total='$total' />
 
         <div class="feeds">
             <div class="feeds-header">
-                <p class="info">All Items <span>40 unread</span></p>
+                <p class="info">All Items <span>{{$total}} unread</span></p>
 
                 <div class="options">
                     <div class="layout">

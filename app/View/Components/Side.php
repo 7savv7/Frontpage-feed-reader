@@ -12,10 +12,11 @@ class Side extends Component
 {
     public $feeds;
     public $categories;
+    public $total;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(int $total)
     {
         $this->feeds = Feed::withCount('items')->get();
         $this->categories = Category::withCount([
@@ -23,6 +24,7 @@ class Side extends Component
                 $q->join('feed_items', 'feeds.id', '=', 'feed_items.feed_id');
             }
         ])->get();
+        $this->total = $total;
     }
 
     /**

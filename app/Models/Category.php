@@ -10,5 +10,9 @@ class Category extends Model
         'name',
         'user_id',
     ];
-    //
+
+    public function feeds()
+    {
+        return $this->hasMany(Feed::class);
+    }
 }

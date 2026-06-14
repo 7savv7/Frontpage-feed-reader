@@ -12,77 +12,13 @@ class FeedController extends Controller
 {
     public function show()
     {
-        $selectedFeeds = request()->input("feed", []);
+        $feeds = Feed::with(['items' => function ($q) {
+            $q->latest()->limit(20);
+        }, 'category'])
+            ->where('user_id', Auth::id())
+            ->get();
 
-        if (Auth::guest()) {
-            $opmlPath = public_path("data/sample-feeds.opml");
-            $xml = simplexml_load_file($opmlPath);
-
-            $categories = collect();
-            $feeds = collect();
-
-            foreach ($xml->body->outline as $categoryNode) {
-                $categoryName = (string) $categoryNode['text'];
-
-                $categories->push((object)[
-                    'id' => $categories->count() + 1,
-                    'name' => $categoryName,
-                ]);
-
-                foreach ($categoryNode->outline as $feedNode) {
-                    $feeds->push((object)[
-                        'id' => $feeds->count() + 1,
-                        'category_id' => $categories->count(),
-                        'title' => (string) $feedNode['title'],
-                        'url' => (string) ($feedNode['xmlUrl'] ?? $feedNode['xmlurl']),
-                    ]);
-                }
-            }
-
-            foreach ($feeds as $feed) {
-                $pie = new SimplePie();
-                $pie->set_feed_url($feed->url);
-                $pie->enable_cache(false);
-                $pie->init();
-
-                $feed->favicon = $pie->get_favicon();
-                if (in_array($feed->id, $selectedFeeds) || empty($selectedFeeds)) {
-                    $feed->items = $pie->get_items() ?? [];
-                } else {
-                    $feed->items = [];
-                }
-            }
-
-            return view("index", compact("feeds", "categories"));
-        }
-
-        $feeds = Feed::where("user_id", Auth::id())->get();
-        foreach ($feeds as $feed) {
-            $pie = new SimplePie();
-            $pie->set_feed_url($feed->url);
-            $pie->enable_cache(false);
-            $pie->init();
-
-            if (!$pie->error()) {
-                $feed->update([
-                    "last_fetch_at" => now(),
-                    "last_health_status" => "active",
-                    "health_status" => "active",
-                ]);
-
-                if (in_array($feed->id, $selectedFeeds) || empty($selectedFeeds)) {
-                    $feed->items = $pie->get_items() ?? [];
-                } else {
-                    $feed->items = [];
-                }
-            } else {
-                $feed->update(["health_status" => "error"]);
-                $feed->items = [];
-            }
-        }
-
-        $categories = Category::where("user_id", Auth::id())->get();
-        return view('index', compact("feeds", "categories"));
+        return view('index', compact('feeds'));
     }
 
     public function store(Request $request)

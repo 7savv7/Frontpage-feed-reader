@@ -1,5 +1,4 @@
 @vite('resources/css/components/side.css')
-@props(["length", "feeds", "categories"])
 
 <aside class="side">
     <ul class="items">
@@ -14,7 +13,7 @@
                     </svg>
                     <p>All Items</p>
                 </div>
-                <p>{{$length}}</p>
+                <p>43</p>
             </a>
         </li>
         <li class="filter-option">
@@ -35,14 +34,8 @@
     <ul class="categories-list">
         @if ($categories !== null)
         @foreach($categories as $category)
-        @php
-        $total = 0;
-        foreach ($feeds->where('category_id', $category->id) as $feed) {
-        $total += count($feed->items);
-        }
-        @endphp
         <li class="category-container">
-            <div class="category filter-option">{{Str::limit($category->name, 20)}} <span>{{$total}}</span></div>
+            <div class="category filter-option">{{Str::limit($category->name, 20)}} <span>10</span></div>
 
             @if (count($feeds->where('category_id', $category->id)))
             <ul class="category-feeds">
@@ -53,7 +46,7 @@
                             <img src="{{$feed->favicon}}" alt="favicon">
                             <p>{{ Str::limit($feed->title, 20) }}</p>
                         </div>
-                        <p class="count">{{count($feed->items)}}</p>
+                        <p class="count">{{$feed->items}}</p>
                     </a>
                 </li>
                 @endforeach

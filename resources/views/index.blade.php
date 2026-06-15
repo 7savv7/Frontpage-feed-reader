@@ -114,6 +114,25 @@ $total += $feed->items->count();
             overflow-y: auto;
         }
 
+        .new-items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: fit-content;
+            background-color: var(--color-accent-subtle);
+            color: var(--color-accent-hover);
+            padding: 8px;
+            border-bottom: 1px solid var(--color-border);
+            margin-top: 5px;
+        }
+
+        .new-items-message {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
         .no-articles {
             display: flex;
             justify-content: center;
@@ -214,9 +233,26 @@ $total += $feed->items->count();
                 </div>
             </div>
 
-
             <div class="articles">
-                @forelse($feeds as $feed)
+                @if ($new > 0)
+                <div class="new-items">
+                    <div class="new-items-message">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up-icon lucide-move-up">
+                            <path d="M8 6L12 2L16 6" />
+                            <path d="M12 2V22" />
+                        </svg>
+
+                        <p>{{$new}} new items since your last visit</p>
+                    </div>
+                </div>
+                @endif
+
+                @if ($totalItems === 0)
+                <div class="no-articles">
+                    <p>No articles yet.</p>
+                </div>
+                @else
+                @foreach($feeds as $feed)
                 @foreach($feed->items as $item)
                 <div class="article">
                     <div class="feed-info">
@@ -226,28 +262,21 @@ $total += $feed->items->count();
                     </div>
 
                     <div class="content">
-                        <h3><a href="{{$item->get_link()}}" target="_blank">{{$item->get_title()}}</a></h3>
+                        <h3><a href="{{$item->url}}" target="_blank">{{$item->title}}</a></h3>
 
-                        <p>{{Str::limit($item->get_description(), 500)}}</p>
+                        <p>{{Str::limit($item->description, 500)}}</p>
 
-                        @php
-                        $category = $categories->firstWhere('id', $feed->category_id);
-                        @endphp
-
-                        @if ($category)
+                        @if ($feed->category)
                         <div>
-                            <p>{{ $category->name }}</p>
+                            <p>{{ $feed->category->name }}</p>
                         </div>
                         @endif
 
                     </div>
                 </div>
                 @endforeach
-                @empty
-                <div class="no-articles">
-                    <p>No articles yet.</p>
-                </div>
-                @endforelse
+                @endforeach
+                @endif
             </div>
         </div>
     </main>

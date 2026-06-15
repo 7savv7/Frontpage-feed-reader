@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('feed_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('feed_id')->constrained()->cascadeOnDelete();
+            $table->boolean('seen')->default(false);
+            $table->boolean('bookmarked')->default(false);
             $table->string('title');
             $table->string('url');
             $table->text('description')->nullable();

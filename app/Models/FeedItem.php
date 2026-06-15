@@ -8,6 +8,8 @@ class FeedItem extends Model
 {
     protected $fillable = [
         'feed_id',
+        'seen',
+        'bookmarked',
         'title',
         'url',
         'description',

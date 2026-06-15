@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Feed;
+use App\Models\FeedItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimplePie\SimplePie;
@@ -12,13 +13,22 @@ class FeedController extends Controller
 {
     public function show()
     {
-        $feeds = Feed::with(['items' => function ($q) {
-            $q->latest()->limit(20);
-        }, 'category'])
-            ->where('user_id', Auth::id())
-            ->get();
+        $feeds = Feed::with([
+            'items' => function ($q) {
+                $q->latest();
+            },
+            'category'
+        ])->where('user_id', Auth::id())->get();
 
-        return view('index', compact('feeds'));
+        $new = 0;
+
+        foreach ($feeds as $feed) {
+            $new += $feed->countNewItems();
+        }
+
+        $totalItems = FeedItem::whereIn('feed_id', $feeds->pluck('id'))->count();
+
+        return view('index', compact('feeds', 'new', 'totalItems'));
     }
 
     public function store(Request $request)
@@ -41,7 +51,7 @@ class FeedController extends Controller
             ]);
         }
 
-        Feed::create(
+        $newFeed = Feed::create(
             [
                 "user_id" => Auth::id(),
                 "url" => $url["feed-url"],
@@ -51,6 +61,16 @@ class FeedController extends Controller
                 "category_id" => $url["select-category"] ?? null,
             ]
         );
+
+        foreach ($feed->get_items(0, 20) as $item) {
+            FeedItem::create([
+                'feed_id' => $newFeed->id,
+                'title' => $item->get_title(),
+                'url' => $item->get_link(),
+                'description' => $item->get_description(),
+                'published_at' => $item->get_date('Y-m-d H:i:s'),
+            ]);
+        }
 
         return redirect("/")->with("success", "Feed added.");
     }

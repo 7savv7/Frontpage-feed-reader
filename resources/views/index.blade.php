@@ -43,13 +43,13 @@ $total += $feed->items->count();
             min-width: 0;
         }
 
-        .articles {
-            display: flex;
-            flex-direction: column;
+        section {
+            overflow-y: auto;
             width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
             align-self: flex-end;
-            overflow-y: auto;
         }
 
         .new-items {
@@ -71,6 +71,25 @@ $total += $feed->items->count();
             font-weight: 600;
         }
 
+        .articles {
+            width: 100%;
+            height: 100%;
+        }
+
+        .first {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-end;
+        }
+
+        .second {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 200px;
+            gap: 10px;
+            padding: 10px;
+        }
+
         .no-articles {
             display: flex;
             justify-content: center;
@@ -87,20 +106,57 @@ $total += $feed->items->count();
             width: 100%;
             align-items: flex-start;
             word-break: break-all;
+            position: relative;
         }
 
-        .feed-info>img {
+        .second .article {
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .third .article {
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .article .seen {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--color-unread-indicator);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .article .feed-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .third .feed-info p {
+            display: none;
+        }
+
+        .article .feed-info>img {
             border-radius: 5px;
-            margin-right: 10px;
+            width: 20px;
+            height: 20px;
         }
 
-        .content {
+        .article .content {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
-        .content a {
+        .third .content p, .third .content div {
+            display: none;
+        }
+
+        .article .content a {
             all: unset;
             cursor: pointer;
         }
@@ -115,7 +171,7 @@ $total += $feed->items->count();
         <div class="feeds">
             <x-article-header :total='$total' />
 
-            <div class="articles">
+            <section>
                 @if ($new > 0)
                 <div class="new-items">
                     <div class="new-items-message">
@@ -129,37 +185,44 @@ $total += $feed->items->count();
                 </div>
                 @endif
 
-                @if ($totalItems === 0)
-                <div class="no-articles">
-                    <p>No articles yet.</p>
-                </div>
-                @else
-                @foreach($feeds as $feed)
-                @foreach($feed->items as $item)
-                <div class="article">
-                    <div class="feed-info">
-                        <img src="{{$feed->favicon}}" alt="favicon">
-
-                        <p>{{$feed->title}}</p>
+                <div class="articles first">
+                    @if ($totalItems === 0)
+                    <div class="no-articles">
+                        <p>No articles yet.</p>
                     </div>
-
-                    <div class="content">
-                        <h3><a href="{{$item->url}}" target="_blank">{{$item->title}}</a></h3>
-
-                        <p>{{Str::limit($item->description, 500)}}</p>
-
-                        @if ($feed->category)
-                        <div>
-                            <p>{{ $feed->category->name }}</p>
-                        </div>
+                    @else
+                    @foreach($feeds as $feed)
+                    @foreach($feed->items as $item)
+                    <div class="article">
+                        @if (!$item->seen)
+                        <div class="seen"></div>
                         @endif
 
+                        <div class="feed-info">
+                            <img src="{{$feed->favicon}}" alt="favicon">
+
+                            <p>{{$feed->title}}</p>
+                        </div>
+
+                        <div class="content">
+                            <h3><a href="{{$item->url}}" target="_blank">{{$item->title}}</a></h3>
+
+                            <p>{{Str::limit($item->description, 500)}}</p>
+
+                            @if ($feed->category)
+                            <div>
+                                <p>{{ $feed->category->name }}</p>
+                            </div>
+                            @endif
+
+                        </div>
                     </div>
+                    @endforeach
+                    @endforeach
+                    @endif
                 </div>
-                @endforeach
-                @endforeach
-                @endif
-            </div>
+            </section>
+
         </div>
     </main>
 </body>

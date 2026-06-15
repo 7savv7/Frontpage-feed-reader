@@ -5,7 +5,7 @@
 
     <div class="options">
         <div class="layout">
-            <div class="layout-option layout-selected">
+            <div class="layout-option layout-selected" id="1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu">
                     <path d="M4 5h16" />
                     <path d="M4 12h16" />
@@ -13,7 +13,7 @@
                 </svg>
             </div>
 
-            <div class="layout-option">
+            <div class="layout-option" id="2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid-icon lucide-layout-grid">
                     <rect width="7" height="7" x="3" y="3" rx="1" />
                     <rect width="7" height="7" x="14" y="3" rx="1" />
@@ -22,7 +22,7 @@
                 </svg>
             </div>
 
-            <div class="layout-option">
+            <div class="layout-option" id="3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents-icon lucide-table-of-contents">
                     <path d="M16 5H3" />
                     <path d="M16 12H3" />

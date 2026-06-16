@@ -15,5 +15,9 @@ class FeedItem extends Model
         'description',
         'published_at'
     ];
-    //
+
+    public function feed()
+    {
+        return $this->belongsTo(Feed::class);
+    }
 }

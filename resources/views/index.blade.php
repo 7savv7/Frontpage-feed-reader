@@ -59,17 +59,22 @@ $total += $feed->items->count();
             width: 100%;
             height: fit-content;
             background-color: var(--color-accent-subtle);
-            color: var(--color-accent-hover);
             padding: 8px;
             border-bottom: 1px solid var(--color-border);
             margin-top: 5px;
         }
 
         .new-items-message {
+            color: var(--color-accent-hover);
             display: flex;
             align-items: center;
             font-weight: 600;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 16px;
         }
 
         .articles {
@@ -177,14 +182,14 @@ $total += $feed->items->count();
                 @if ($new > 0)
                 <form class="new-items" action="/refresh" method="post">
                     @csrf
-                    <div class="new-items-message">
+                    <button class="new-items-message">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up-icon lucide-move-up">
                             <path d="M8 6L12 2L16 6" />
                             <path d="M12 2V22" />
                         </svg>
 
                         <p>{{$new}} new items since your last visit</p>
-                    </div>
+                    </button>
                 </form>
                 @endif
 

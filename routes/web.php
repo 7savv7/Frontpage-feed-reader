@@ -10,6 +10,8 @@ Route::post("/", [FeedController::class, "store"])->middleware("auth")->name("ho
 
 Route::post("/refresh", [FeedController::class, "refresh"])->middleware("auth");
 
+Route::post("/read", [FeedController::class, "readAll"])->middleware("auth");
+
 Route::post("/category", [CategoryController::class, "store"])->middleware("auth");
 
 

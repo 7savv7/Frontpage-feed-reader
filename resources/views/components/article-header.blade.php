@@ -40,7 +40,7 @@
 
         <form class="button-form" action="/refresh" method="post">
             @csrf
-            <button class="button refresh">
+            <button type="submit" class="button refresh">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw-icon lucide-refresh-ccw">
                     <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                     <path d="M3 3v5h5" />
@@ -52,8 +52,9 @@
             </button>
         </form>
 
-        <div class="button read">
-            <p>Mark all read</p>
-        </div>
+        <form class="button-form" action="/read" method="post">
+            @csrf
+            <button class="button read" type="submit">Mark all read</button>
+        </form>
     </div>
 </div>

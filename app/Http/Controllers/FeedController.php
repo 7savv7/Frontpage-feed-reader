@@ -87,4 +87,13 @@ class FeedController extends Controller
 
         return back()->with('success', "$totalAdded new items added.");
     }
+
+    public function readAll()
+    {
+        FeedItem::whereHas('feed', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->update(['seen' => true]);
+
+        return back()->with('success', 'All items marked as read.');
+    }
 }

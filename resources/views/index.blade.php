@@ -69,6 +69,7 @@ $total += $feed->items->count();
             display: flex;
             align-items: center;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .articles {
@@ -152,7 +153,8 @@ $total += $feed->items->count();
             align-items: flex-start;
         }
 
-        .third .content p, .third .content div {
+        .third .content p,
+        .third .content div {
             display: none;
         }
 
@@ -173,7 +175,8 @@ $total += $feed->items->count();
 
             <section>
                 @if ($new > 0)
-                <div class="new-items">
+                <form class="new-items" action="/refresh" method="post">
+                    @csrf
                     <div class="new-items-message">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up-icon lucide-move-up">
                             <path d="M8 6L12 2L16 6" />
@@ -182,7 +185,7 @@ $total += $feed->items->count();
 
                         <p>{{$new}} new items since your last visit</p>
                     </div>
-                </div>
+                </form>
                 @endif
 
                 <div class="articles first">

@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", [FeedController::class, "show"])->name("home");
 Route::post("/", [FeedController::class, "store"])->middleware("auth")->name("home");
 
+Route::post("/refresh", [FeedController::class, "refresh"])->middleware("auth");
+
 Route::post("/category", [CategoryController::class, "store"])->middleware("auth");
+
 
 Route::get("/digest", function () {
     return "Digest";

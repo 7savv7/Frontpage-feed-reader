@@ -68,6 +68,16 @@
     border: 1px solid var(--color-border);
     margin-left: 8px;
     cursor: pointer;
+    background-color: white;
+    height: 30px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.feeds-header .button-form {
+    width: fit-content;
+    height: fit-content;
 }
 
 .feeds-header .button:hover {

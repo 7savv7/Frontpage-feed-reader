@@ -62,7 +62,7 @@ class FeedController extends Controller
             ]
         );
 
-        foreach ($feed->get_items(0, 20) as $item) {
+        foreach ($feed->get_items() as $item) {
             FeedItem::create([
                 'feed_id' => $newFeed->id,
                 'title' => $item->get_title(),
@@ -73,5 +73,18 @@ class FeedController extends Controller
         }
 
         return redirect("/")->with("success", "Feed added.");
+    }
+
+    public function refresh()
+    {
+        $feeds = Feed::where('user_id', Auth::id())->get();
+
+        $totalAdded = 0;
+
+        foreach ($feeds as $feed) {
+            $totalAdded += $feed->fetchNewItems();
+        }
+
+        return back()->with('success', "$totalAdded new items added.");
     }
 }
